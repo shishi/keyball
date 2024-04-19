@@ -1181,7 +1181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(0)   , XXXXXXX  , KC_PEQL , KC_PSLS , KC_PAST , KC_NUM  ,                                 XXXXXXX    , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , TO(0)   ,
     XXXXXXX , XXXXXXX  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                                 XXXXXXX    , A(KC_LEFT) , A(KC_RIGHT) , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                                 C(KC_W)    , KC_BTN1    , KC_BTN3     , KC_BTN2 , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , KC_P1   , KC_P2   , KC_P3   , KC_PENT , XXXXXXX  ,           XXXXXXX  , C(S(KC_T)) , KC_PGUP    , KC_PGDN     , XXXXXXX , XXXXXXX , XXoioioiXXXXX ,
+    XXXXXXX , XXXXXXX  , KC_P1   , KC_P2   , KC_P3   , KC_PENT , XXXXXXX  ,           XXXXXXX  , C(S(KC_T)) , KC_PGUP    , KC_PGDN     , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX  , KC_0    , KC_PDOT , KC_PCMM , XXXXXXX , XXXXXXX  ,           XXXXXXX  , KC_DEL     , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX
   ),
 
