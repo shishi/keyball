@@ -13,19 +13,12 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
-void pointing_device_init_user(void) {
-    // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
-    set_auto_mouse_layer(1);
-
-    // always required before the auto mouse feature will work
-    set_auto_mouse_enable(true);
-}
-
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 2
     keyball_set_scroll_mode(get_highest_layer(state) == 2);
     return state;
 }
+
 enum {
     NONE = 0,
     SINGLE_TAP = 1,
@@ -1188,7 +1181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(0)   , XXXXXXX  , KC_PEQL , KC_PSLS , KC_PAST , KC_NUM  ,                                 XXXXXXX    , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , TO(0)   ,
     XXXXXXX , XXXXXXX  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                                 XXXXXXX    , A(KC_LEFT) , A(KC_RIGHT) , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                                 C(KC_W)    , KC_BTN1    , KC_BTN3     , KC_BTN2 , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , KC_P1   , KC_P2   , KC_P3   , KC_PENT , XXXXXXX  ,           XXXXXXX  , C(S(KC_T)) , KC_PGUP    , KC_PGDN     , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX  , KC_P1   , KC_P2   , KC_P3   , KC_PENT , XXXXXXX  ,           XXXXXXX  , C(S(KC_T)) , KC_PGUP    , KC_PGDN     , XXXXXXX , XXXXXXX , XXoioioiXXXXX ,
     XXXXXXX , XXXXXXX  , KC_0    , KC_PDOT , KC_PCMM , XXXXXXX , XXXXXXX  ,           XXXXXXX  , KC_DEL     , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX
   ),
 
