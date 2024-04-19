@@ -13,12 +13,19 @@ void oledkit_render_info_user(void) {
 }
 #endif
 
+void pointing_device_init_user(void) {
+    // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    // set_auto_mouse_layer(1);
+
+    // always required before the auto mouse feature will work
+    set_auto_mouse_enable(true);
+}
+
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 2
     keyball_set_scroll_mode(get_highest_layer(state) == 2);
     return state;
 }
-
 enum {
     NONE = 0,
     SINGLE_TAP = 1,
