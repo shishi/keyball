@@ -1178,7 +1178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_universal(
-    TO(0)   , XXXXXXX  , XXXXXXX , SSNP_FRE , SSNP_VRT , XXXXXXX  ,                              XXXXXXX , XXXXXXX    , XXXXXXX    , XXXXXXX , XXXXXXX , TO(0)   ,
+    TO(0)   , XXXXXXX  , XXXXXXX , SSNP_HOR , SSNP_VRT , XXXXXXX  ,                              XXXXXXX , XXXXXXX    , XXXXXXX    , XXXXXXX , XXXXXXX , TO(0)   ,
     XXXXXXX , KBC_RST  , XXXXXXX , CPI_D1K  , CPI_I1K  , XXXXXXX  ,                              XXXXXXX , KC_LBRC    , KC_RBRC    , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , KBC_SAVE , XXXXXXX , CPI_D100 , CPI_I100 , XXXXXXX  ,                              XXXXXXX , S(KC_9)    , S(KC_0)    , XXXXXXX , XXXXXXX , XXXXXXX ,
     XXXXXXX , XXXXXXX  , XXXXXXX , SCRL_DVI , SCRL_DVD , XXXXXXX  , QK_BOOT ,          EE_CLR  , XXXXXXX , S(KC_LBRC) , S(KC_RBRC) , XXXXXXX , XXXXXXX , XXXXXXX ,
