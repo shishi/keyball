@@ -1,4 +1,4 @@
-name: Build all firmwares
+name: Build own firmwares
 
 on:
   push:
