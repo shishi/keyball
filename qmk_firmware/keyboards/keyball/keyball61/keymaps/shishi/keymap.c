@@ -38,6 +38,7 @@ enum {
 enum {
     TD_TRIPLE_BRACE_START = 0,
     TD_TRIPLE_BRACE_END,
+    TD_DOUBLE_SHIFT,
     TD_B,
     TD_C,
     TD_E,
@@ -1152,9 +1153,17 @@ void triple_brace_end(tap_dance_state_t *state, void *user_data) {
     reset_tap_dance(state);
 }
 
+void double_shift(tap_dance_state_t *state, void *user_data) {
+    register_code(KC_LEFT);
+    unregister_code(KC_LEFT);
+    register_code(KC_LEFT);
+    unregister_code(KC_LEFT);
+}
+
 tap_dance_action_t tap_dance_actions[] = {
     [TD_TRIPLE_BRACE_START] = ACTION_TAP_DANCE_FN(triple_brace_start),
     [TD_TRIPLE_BRACE_END] = ACTION_TAP_DANCE_FN(triple_brace_end),
+    [TD_DOUBLE_SHIFT] = ACTION_TAP_DANCE_FN(double_shift),
     [TD_B] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, b_finished, b_reset),
     [TD_C] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, c_finished, c_reset),
     [TD_E] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, e_finished, e_reset),
@@ -1189,11 +1198,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [2] = LAYOUT_universal(
-    TO(0)   , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                                 XXXXXXX , KC_INS   , KC_SCRL , KC_PAUSE , XXXXXXX , TO(0)   ,
-    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , XXXXXXX ,                                 XXXXXXX , KC_HOME  , KC_END  , XXXXXXX  , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , XXXXXXX ,                                 KC_LEFT , KC_DOWN  , KC_UP   , KC_RGHT  , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , XXXXXXX , XXXXXXX  ,            XXXXXXX , XXXXXXX , KC_PGUP  , KC_PGDN , XXXXXXX  , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_F13  , KC_F14  , KC_F15  , KC_BSPC , KC_SPC  , KC_ENTER ,            XXXXXXX , KC_DEL  , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX
+    TO(0)   , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                                            XXXXXXX  , KC_INS   , KC_SCRL , KC_PAUSE , XXXXXXX , TO(0)   ,
+    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , XXXXXXX ,                                            XXXXXXX  , KC_HOME  , KC_END  , XXXXXXX  , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , XXXXXXX ,                                            KC_LEFT  , KC_DOWN  , KC_UP   , KC_RGHT  , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , XXXXXXX , XXXXXXX  ,            XXXXXXX            , XXXXXXX  , KC_PGUP  , KC_PGDN , XXXXXXX  , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_F13  , KC_F14  , KC_F15  , KC_BSPC , KC_SPC  , KC_ENTER ,            TD(TD_DOUBLE_SHIFT), KC_DEL   , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX
   ),
 
   [3] = LAYOUT_universal(
