@@ -1154,10 +1154,10 @@ void triple_brace_end(tap_dance_state_t *state, void *user_data) {
 }
 
 void double_shift(tap_dance_state_t *state, void *user_data) {
-    register_code(KC_LEFT);
-    unregister_code(KC_LEFT);
-    register_code(KC_LEFT);
-    unregister_code(KC_LEFT);
+    register_code(KC_LSFT);
+    unregister_code(KC_LSFT);
+    register_code(KC_LSFT);
+    unregister_code(KC_LSFT);
 }
 
 tap_dance_action_t tap_dance_actions[] = {
