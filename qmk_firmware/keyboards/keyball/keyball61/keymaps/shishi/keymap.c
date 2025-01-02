@@ -45,15 +45,83 @@ enum {
     TD_G,
     TD_H,
     TD_I,
+    TD_M,
     TD_N,
     TD_R,
     TD_T,
     TD_V,
     TD_X,
     TD_Y,
-    TD_Z
+    TD_Z,
+    TD_COMMA
 };
 
+typedef struct {
+    bool is_press_action;
+    int state;
+} tap;
+
+//instanalize an instance of 'tap' for the 'x' tap dance.
+static tap btap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap ctap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap etap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap gtap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap htap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap itap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap mtap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap ntap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap rtap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap ttap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap vtap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap xtap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap ytap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap ztap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
+static tap comma_tap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
 /*
  * Return an integer that corresponds to what kind of tap dance should be executed.
  *
@@ -121,65 +189,6 @@ int cur_dance (tap_dance_state_t *state) {
         return MORE_TAP;
     }
     else return 99; //magic number. At some point this method will expand to work for more presses
-};
-
-typedef struct {
-    bool is_press_action;
-    int state;
-} tap;
-
-//instanalize an instance of 'tap' for the 'x' tap dance.
-static tap btap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap ctap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap etap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap gtap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap htap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap itap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap ntap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap rtap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap ttap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap vtap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap xtap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap ytap_state = {
-    .is_press_action = true,
-    .state = NONE
-};
-static tap ztap_state = {
-    .is_press_action = true,
-    .state = NONE
 };
 
 void repeat_key_x_time(uint16_t keycode, int x) {
