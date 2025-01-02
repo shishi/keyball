@@ -1323,7 +1323,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_V] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, v_finished, v_reset),
     [TD_X] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, x_finished, x_reset),
     [TD_Y] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, y_finished, y_reset),
-    [TD_Z] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, z_finished, z_reset)
+    [TD_Z] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, z_finished, z_reset),
     [TD_COMMA] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, comma_finished, comma_reset)
 };
 
