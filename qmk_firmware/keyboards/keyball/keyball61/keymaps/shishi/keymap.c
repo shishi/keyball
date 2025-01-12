@@ -1331,9 +1331,9 @@ tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     XXXXXXX  , KC_1         , KC_2         , KC_3         , KC_4         , KC_5         ,                                          KC_6          , KC_7         , KC_8         , KC_9         , KC_0            , XXXXXXX ,
-    XXXXXXX  , KC_Q         , KC_W         , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                          TD(TD_Y)      , KC_U         , TD(TD_I)     , KC_O         , LT(2, KC_P)     , XXXXXXX ,
+    XXXXXXX  , KC_Q         , KC_W         , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                          TD(TD_Y)      , KC_U         , TD(TD_I)     , KC_O         , LT(1, KC_P)     , XXXXXXX ,
     XXXXXXX  , LGUI_T(KC_A) , LALT_T(KC_S) , LSFT_T(KC_D) , LCTL_T(KC_F) , TD(TD_G)     ,                                          TD(TD_H)      , RCTL_T(KC_J) , RSFT_T(KC_K) , RALT_T(KC_L) , RGUI_T(KC_SCLN) , XXXXXXX ,
-    XXXXXXX  , TD(TD_Z)     , TD(TD_X)     , TD(TD_C)     , TD(TD_V)     , TD(TD_B)     , KC_LNG1      ,          KC_LNG2        , TD(TD_N)      , TD(TD_M)     , TD(TD_COMMA) , KC_DOT       , LT(3, KC_SLSH)  , XXXXXXX ,
+    XXXXXXX  , TD(TD_Z)     , TD(TD_X)     , TD(TD_C)     , TD(TD_V)     , TD(TD_B)     , KC_LNG1      ,          KC_LNG2        , TD(TD_N)      , TD(TD_M)     , TD(TD_COMMA) , KC_DOT       , LT(2, KC_SLSH)  , XXXXXXX ,
     XXXXXXX  , TO(3)        , TO(2)        , TO(1)        , LT(1,KC_ESC) , LT(2,KC_SPC) , LT(3,KC_TAB) ,          LT(2,KC_ENTER) , LT(1,KC_BSPC) , XXXXXXX      , XXXXXXX      , XXXXXXX      , XXXXXXX         , XXXXXXX
   ),
   [1] = LAYOUT_universal(
