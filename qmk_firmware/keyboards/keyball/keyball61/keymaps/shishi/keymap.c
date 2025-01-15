@@ -45,7 +45,7 @@ enum {
     TD_I,
     TD_M,
     TD_N,
-    TD_Q,
+    TD_O,
     TD_R,
     TD_T,
     TD_U,
@@ -95,7 +95,7 @@ static tap ntap_state = {
     .is_press_action = true,
     .state = NONE
 };
-static tap qtap_state = {
+static tap otap_state = {
     .is_press_action = true,
     .state = NONE
 };
