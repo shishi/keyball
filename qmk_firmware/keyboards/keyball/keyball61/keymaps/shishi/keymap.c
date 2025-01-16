@@ -17,8 +17,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // if just include layer2, set scroll mode
     // keyball_set_scroll_mode(layer_state_is(2));
 
-    // Auto enable scroll mode when the highest layer is 2
-    keyball_set_scroll_mode(get_highest_layer(state) == 2);
+    // Auto enable scroll mode when the highest layer is 3
+    keyball_set_scroll_mode(get_highest_layer(state) == 3);
     return state;
 }
 
