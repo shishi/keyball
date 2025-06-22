@@ -27,7 +27,7 @@ void double_shift(void) {
     tap_code(KC_LSFT);
 }
 
-// begin of smtd_h
+// begin of smtd
 // https://github.com/stasmarkin/sm_td/blob/main/docs/010_installation_guide.md
 enum custom_keycodes {
     SMTD_KEYCODES_BEGIN = SAFE_RANGE,
@@ -57,14 +57,14 @@ enum custom_keycodes {
     CKC_X,
     CKC_Y,
     CKC_Z,
-    CKC_BSPC,
+    CKC_BACKSPACE,
     CKC_COMMA,
     CKC_DOT,
     CKC_ENTER,
-    CKC_ESC,
-    CKC_SCLN,
-    CKC_SLSH,
-    CKC_SPC,
+    CKC_ESCAPE,
+    CKC_SEMICOLON,
+    CKC_SLASH,
+    CKC_SPACE,
     CKC_TAB,
     DOUBLE_SHIFT_KEY,
     SMTD_KEYCODES_END,
@@ -89,7 +89,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // タップ後ホールドを検出するための静的変数
-static bool key_was_tapped = false;
+static bool key_was_tapped = true;
 
 // 単一キー用マクロ
 // 使い分け: タップでキー、ホールドで別の単一キー、タップ後ホールドでリピート
@@ -208,7 +208,7 @@ static bool key_was_tapped = false;
 //     タップ: a, ホールド: h-e-l-l-oを順次入力
 // 例: SMTD_TAP_HOLD_REPEAT_SEQUENCE(KC_B, LCTL(KC_C), LCTL(KC_V))
 //     タップ: b, ホールド: Ctrl+C → Ctrl+V を順次実行
-// 例: SMTD_TAP_HOLD_REPEAT_SEQUENCE(KC_S, KC_ESC, LSFT(KC_SCLN), KC_Q, KC_ENT)
+// 例: SMTD_TAP_HOLD_REPEAT_SEQUENCE(KC_S, KC_ESCAPE, LSFT(KC_SEMICOLON), KC_Q, KC_ENTER)
 //     タップ: s, ホールド: Esc → : → q → Enter (vim終了コマンド)
 #define SMTD_TAP_HOLD_REPEAT_SEQUENCE(tap_key, ...) \
     switch (action) { \
@@ -236,60 +236,65 @@ static bool key_was_tapped = false;
 
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch ((uint16_t)keycode) {
-        // Mod-Tap keys
-        SMTD_MT(CKC_A, KC_A, KC_LEFT_GUI)
-        SMTD_MT(CKC_D, KC_D, KC_LEFT_SHIFT)
-        SMTD_MT(CKC_F, KC_F, KC_LEFT_CTRL)
-        SMTD_MT(CKC_J, KC_J, KC_RIGHT_CTRL)
-        SMTD_MT(CKC_K, KC_K, KC_RIGHT_SHIFT)
-        SMTD_MT(CKC_L, KC_L, KC_RIGHT_ALT)
-        SMTD_MT(CKC_S, KC_S, KC_LEFT_ALT)
-        SMTD_MT(CKC_SCLN, KC_SCLN, KC_RIGHT_GUI)
-
-        // Layer-Tap keys
-        SMTD_LT(CKC_P, KC_P, 3)
-        SMTD_LT(CKC_BSPC, KC_BSPC, 2)
-        SMTD_LT(CKC_ENTER, KC_ENTER, 1)
-        SMTD_LT(CKC_ESC, KC_ESC, 3)
-        SMTD_LT(CKC_SLSH, KC_SLSH, 2)
-        SMTD_LT(CKC_SPC, KC_SPC, 2)
-        SMTD_LT(CKC_TAB, KC_TAB, 1)
-
+        case CKC_A:
+            SMTD_TAP_HOLD_REPEAT(KC_A, KC_LEFT_GUI);
+            break;
         case CKC_B:
-            SMTD_TAP_HOLD_REPEAT(KC_B, KC_LCBR);
+            SMTD_TAP_HOLD_REPEAT(KC_B, KC_LEFT_CURLY_BRACE);
             break;
         case CKC_C:
             SMTD_TAP_HOLD_REPEAT_COMBO(KC_C, KC_LCTL, KC_C);
             break;
+        case CKC_D:
+            SMTD_TAP_HOLD_REPEAT(KC_D, KC_LEFT_SHIFT)
+            break;
         case CKC_E:
-            SMTD_TAP_HOLD_REPEAT(KC_E, KC_ESC);
+            SMTD_TAP_HOLD_REPEAT(KC_E, KC_ESCAPE);
+            break;
+        case CKC_F:
+            SMTD_TAP_HOLD_REPEAT(KC_F, KC_LEFT_CTRL);
             break;
         case CKC_G:
-            SMTD_TAP_HOLD_REPEAT(KC_G, KC_LPRN);
+            SMTD_TAP_HOLD_REPEAT(KC_G, KC_LEFT_PAREN);
             break;
         case CKC_H:
-            SMTD_TAP_HOLD_REPEAT(KC_H, KC_RPRN);
+            SMTD_TAP_HOLD_REPEAT(KC_H, KC_RIGHT_PAREN);
             break;
         case CKC_I:
-            SMTD_TAP_HOLD_REPEAT(KC_I, KC_ESC);
+            SMTD_TAP_HOLD_REPEAT(KC_I, KC_ESCAPE);
+            break;
+        case CKC_J:
+            SMTD_TAP_HOLD_REPEAT(KC_J, KC_RIGHT_CTRL);
+            break;
+        case CKC_K:
+            SMTD_TAP_HOLD_REPEAT(KC_K, KC_RIGHT_SHIFT);
+            break;
+        case CKC_L:
+            SMTD_TAP_HOLD_REPEAT(KC_L, KC_RIGHT_ALT);
             break;
         case CKC_M:
             SMTD_TAP_HOLD_REPEAT(KC_M, KC_MINUS);
             break;
         case CKC_N:
-            SMTD_TAP_HOLD_REPEAT(KC_N, KC_RCBR);
+            SMTD_TAP_HOLD_REPEAT(KC_N, KC_RIGHT_CURLY_BRACE);
             break;
         case CKC_O:
-            SMTD_TAP_HOLD_REPEAT(KC_O, KC_GRV);
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_O, layer_on(3), layer_off(3))
+            break;
+        case CKC_P:
+            SMTD_TAP_HOLD_REPEAT(KC_P, KC_GRAVE);
             break;
         case CKC_R:
             SMTD_TAP_HOLD_REPEAT_COMBO(KC_R, KC_LCTL, KC_R);
             break;
+        case CKC_S:
+            SMTD_TAP_HOLD_REPEAT(KC_S, KC_LEFT_ALT);
+            break;
         case CKC_T:
-            SMTD_TAP_HOLD_REPEAT(KC_T, KC_LBRC);
+            SMTD_TAP_HOLD_REPEAT(KC_T, KC_LEFT_BRACKET);
             break;
         case CKC_U:
-            SMTD_TAP_HOLD_REPEAT(KC_U, KC_QUOT);
+            SMTD_TAP_HOLD_REPEAT(KC_U, KC_QUOTE);
             break;
         case CKC_V:
             SMTD_TAP_HOLD_REPEAT_COMBO(KC_V, KC_LCTL, KC_V);
@@ -298,16 +303,37 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
             SMTD_TAP_HOLD_REPEAT_COMBO(KC_X, KC_LCTL, KC_X);
             break;
         case CKC_Y:
-            SMTD_TAP_HOLD_REPEAT(KC_Y, KC_RBRC);
+            SMTD_TAP_HOLD_REPEAT(KC_Y, KC_RIGHT_BRACKET);
             break;
         case CKC_Z:
             SMTD_TAP_HOLD_REPEAT_COMBO(KC_Z, KC_LCTL, KC_Z);
             break;
+        case CKC_BACKSPACE:
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_BACKSPACE, layer_on(2), layer_off(2))
+            break;
         case CKC_COMMA:
-            SMTD_TAP_HOLD_REPEAT(KC_COMM, KC_EQL);
+            SMTD_TAP_HOLD_REPEAT(KC_COMMA, KC_EQUAL);
+            break;
+        case CKC_ENTER:
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_ENTER, layer_on(1), layer_off(1))
+            break;
+        case CKC_ESCAPE:
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_ESCAPE, layer_on(3), layer_off(3))
             break;
         case CKC_DOT:
-            SMTD_TAP_HOLD_REPEAT(KC_DOT, KC_BSLS);
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_DOT, layer_on(2), layer_off(2))
+            break;
+        case CKC_SEMICOLON:
+            SMTD_TAP_HOLD_REPEAT(KC_SEMICOLON, KC_RIGHT_GUI);
+            break;
+        case CKC_SLASH:
+            SMTD_TAP_HOLD_REPEAT(KC_SLASH, KC_BACKSLASH);
+            break;
+        case CKC_SPACE:
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_SPACE, layer_on(2), layer_off(2))
+            break;
+        case CKC_SPACE:
+            SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_TAB, layer_on(1), layer_off(1))
             break;
         default:
             break;
@@ -393,16 +419,16 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
 //     } // end of switch (keycode)
 // } // end of on_smtd_action function
 
-// end of smtd_h
+// end of smtd
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
-    XXXXXXX  , KC_1         , KC_2         , KC_3         , KC_4         , KC_5         ,                                          KC_6          , KC_7         , KC_8         , KC_9         , KC_0            , XXXXXXX ,
-    XXXXXXX  , KC_Q         , KC_W         , CKC_E        , CKC_R        , CKC_T        ,                                          CKC_Y         , CKC_U        , CKC_I        , CKC_O        , CKC_P           , XXXXXXX ,
-    XXXXXXX  , CKC_A        , CKC_S        , CKC_D        , CKC_F        , CKC_G        ,                                          CKC_H         , CKC_J        , CKC_K        , CKC_L        , CKC_SCLN        , XXXXXXX ,
-    XXXXXXX  , CKC_Z        , CKC_X        , CKC_C        , CKC_V        , CKC_B        , KC_LNG1      ,          KC_LNG2        , CKC_N         , CKC_M        , CKC_COMMA    , CKC_DOT      , CKC_SLSH        , XXXXXXX ,
-    XXXXXXX  , TO(3)        , TO(2)        , TO(1)        , CKC_ESC      , CKC_SPC      , CKC_TAB      ,          CKC_ENTER     , CKC_BSPC     , XXXXXXX      , XXXXXXX      , XXXXXXX      , XXXXXXX         , XXXXXXX
+    XXXXXXX  , KC_1         , KC_2         , KC_3         , KC_4        , KC_5         ,                                          KC_6          , KC_7         , KC_8         , KC_9         , KC_0            , XXXXXXX ,
+    XXXXXXX  , KC_Q         , KC_W         , CKC_E        , CKC_R       , CKC_T        ,                                          CKC_Y         , CKC_U        , CKC_I        , CKC_O        , CKC_P           , XXXXXXX ,
+    XXXXXXX  , CKC_A        , CKC_S        , CKC_D        , CKC_F       , CKC_G        ,                                          CKC_H         , CKC_J        , CKC_K        , CKC_L        , CKC_SEMICOLON   , XXXXXXX ,
+    XXXXXXX  , CKC_Z        , CKC_X        , CKC_C        , CKC_V       , CKC_B        , KC_LNG1 ,                    KC_LNG2   , CKC_N         , CKC_M        , CKC_COMMA    , CKC_DOT      , CKC_SLASH        , XXXXXXX ,
+    XXXXXXX  , TO(3)        , TO(2)        , TO(1)        , CKC_ESCAPE  , CKC_SPACE    , CKC_TAB ,                    CKC_ENTER , CKC_BACKSPACE , XXXXXXX      , XXXXXXX      , XXXXXXX      , XXXXXXX         , XXXXXXX
   ),
   [1] = LAYOUT_universal(
     XXXXXXX , XXXXXXX  , KC_PEQL , KC_PSLS , KC_PAST , KC_NUM  ,                                            XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
@@ -423,7 +449,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , KBC_RST  , XXXXXXX , SSNP_HOR , SSNP_VRT , XXXXXXX ,                              KC_INS   , KC_LBRC    , KC_RBRC    , KC_APP  , KC_GRV  , XXXXXXX ,
     XXXXXXX , KBC_SAVE , XXXXXXX , CPI_D100 , CPI_I100 , QK_BOOT ,                              KC_SCRL  , S(KC_9)    , S(KC_0)    , KC_PSCR , KC_QUOT , XXXXXXX ,
     XXXXXXX , XXXXXXX  , XXXXXXX , SCRL_DVD , SCRL_DVI , EE_CLR  , TO(0)   ,          TO(0)   , KC_PAUSE , S(KC_LBRC) , S(KC_RBRC) , XXXXXXX , KC_BSLS , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , XXXXXXX , AML_TO   , XXXXXXX  , KC_SPC  , XXXXXXX ,          XXXXXXX , XXXXXXX  , XXXXXXX    , XXXXXXX    , XXXXXXX , XXXXXXX , XXXXXXX
+    XXXXXXX , XXXXXXX  , XXXXXXX , AML_TO   , XXXXXXX  , KC_SPACE  , XXXXXXX ,          XXXXXXX , XXXXXXX  , XXXXXXX    , XXXXXXX    , XXXXXXX , XXXXXXX , XXXXXXX
   ),
 };
 // clang-format on
