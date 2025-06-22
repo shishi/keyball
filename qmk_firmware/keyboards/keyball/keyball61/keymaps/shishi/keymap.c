@@ -235,7 +235,7 @@ static bool key_was_tapped = false;
     }
 
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
-    switch (keycode) {
+    switch ((uint16_t)keycode) {
         // Mod-Tap keys
         SMTD_MT(CKC_A, KC_A, KC_LEFT_GUI)
         SMTD_MT(CKC_D, KC_D, KC_LEFT_SHIFT)
@@ -308,6 +308,8 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
             break;
         case CKC_DOT:
             SMTD_TAP_HOLD_REPEAT(KC_DOT, KC_BSLS);
+            break;
+        default:
             break;
     }
 }
