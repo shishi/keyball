@@ -224,7 +224,7 @@ static bool key_was_tapped = false;
             } else { \
                 uint16_t keys[] = {__VA_ARGS__, KC_NO}; \
                 for (int i = 0; keys[i] != KC_NO; i++) { \
-                    tap_code(keys[i]); \
+                    tap_code16(keys[i]); \
                 } \
             } \
             break; \
