@@ -852,7 +852,7 @@ void p_reset (tap_dance_state_t *state, void *user_data) {
         default:
             break;
     }
-    otap_state.state = NONE;
+    ptap_state.state = NONE;
 };
 
 void r_finished (tap_dance_state_t *state, void *user_data) {
@@ -1481,7 +1481,7 @@ void slash_reset (tap_dance_state_t *state, void *user_data) {
         default:
             break;
     }
-    SLASH_tap_state.state = NONE;
+    slash_tap_state.state = NONE;
 };
 
 void double_shift(tap_dance_state_t *state, void *user_data) {
