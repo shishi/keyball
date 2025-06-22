@@ -104,16 +104,26 @@ static bool key_was_tapped = false;
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
-            if (!key_was_tapped) { \
-                register_code16(hold_key); \
-            } else { \
-                register_code16(tap_key); \
+            switch (tap_count) { \
+                case 0: \
+                case 1: \
+                    register_code16(tap_key) \
+                    break; \
+                default: \
+                    register_code16(hold_key); \
+                    break; \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
-            unregister_code16(tap_key); \
-            unregister_code16(hold_key); \
-            key_was_tapped = false; \
+            switch (tap_count) { \
+                case 0: \
+                case 1: \
+                    unregister_code16(tap_key) \
+                    break; \
+                default: \
+                    unregister_code16(hold_key); \
+                    break; \
+            } \
             break; \
     }
 
