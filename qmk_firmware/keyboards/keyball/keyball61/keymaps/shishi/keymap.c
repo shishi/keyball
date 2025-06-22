@@ -89,7 +89,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // タップ後ホールドを検出するための静的変数
-static bool key_was_tapped = true;
+static bool key_was_tapped = false;
 
 // 単一キー用マクロ
 // 使い分け: タップでキー、ホールドで別の単一キー、タップ後ホールドでリピート
@@ -104,10 +104,10 @@ static bool key_was_tapped = true;
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
-            if (key_was_tapped) { \
-                register_code16(tap_key); \
-            } else { \
+            if (!key_was_tapped) { \
                 register_code16(hold_key); \
+            } else { \
+                register_code16(tap_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
@@ -132,11 +132,11 @@ static bool key_was_tapped = true;
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
-            if (key_was_tapped) { \
-                register_code16(tap_key); \
-            } else { \
+            if (!key_was_tapped) { \
                 register_mods(MOD_BIT(hold_mod)); \
                 register_code16(hold_key); \
+            } else { \
+                register_code16(tap_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
@@ -162,10 +162,10 @@ static bool key_was_tapped = true;
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
-            if (key_was_tapped) { \
-                register_code16(tap_key); \
-            } else { \
+            if (!key_was_tapped) { \
                 hold_action; \
+            } else { \
+                register_code16(tap_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
@@ -190,10 +190,10 @@ static bool key_was_tapped = true;
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
-            if (key_was_tapped) { \
-                register_code16(tap_key); \
-            } else { \
+            if (!key_was_tapped) { \
                 send_string(hold_string); \
+            } else { \
+                register_code16(tap_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
@@ -219,13 +219,13 @@ static bool key_was_tapped = true;
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
-            if (key_was_tapped) { \
-                register_code16(tap_key); \
-            } else { \
+            if (!key_was_tapped) { \
                 uint16_t keys[] = {__VA_ARGS__, KC_NO}; \
                 for (int i = 0; keys[i] != KC_NO; i++) { \
                     tap_code16(keys[i]); \
                 } \
+            } else { \
+                register_code16(tap_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
