@@ -850,8 +850,8 @@ void r_finished (tap_dance_state_t *state, void *user_data) {
             register_code(KC_R);
             break;
         case SINGLE_HOLD:
-            register_code(KC_LCTL);
-            register_code(KC_R);
+            register_code(KC_LSFT);
+            register_code(KC_QUOTE);
             break;
         case DOUBLE_TAP:
             repeat_key_x_time(KC_R, 2);
@@ -884,8 +884,8 @@ void r_reset (tap_dance_state_t *state, void *user_data) {
             unregister_code(KC_R);
             break;
         case SINGLE_HOLD:
-            unregister_code(KC_LCTL);
-            unregister_code(KC_R);
+            unregister_code(KC_LSFT);
+            unregister_code(KC_QUOTE);
             break;
         case DOUBLE_TAP:
             unregister_code(KC_R);
