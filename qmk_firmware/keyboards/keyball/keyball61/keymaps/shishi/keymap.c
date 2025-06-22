@@ -107,7 +107,7 @@ static bool key_was_tapped = false;
             switch (tap_count) { \
                 case 0: \
                 case 1: \
-                    register_code16(tap_key) \
+                    register_code16(tap_key); \
                     break; \
                 default: \
                     register_code16(hold_key); \
@@ -118,7 +118,7 @@ static bool key_was_tapped = false;
             switch (tap_count) { \
                 case 0: \
                 case 1: \
-                    unregister_code16(tap_key) \
+                    unregister_code16(tap_key); \
                     break; \
                 default: \
                     unregister_code16(hold_key); \
