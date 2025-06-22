@@ -34,34 +34,101 @@ enum {
     MORE_TAP = 9
 };
 
-enum {
-    TD_DOUBLE_SHIFT = 0,
-    TD_B,
-    TD_C,
-    TD_E,
-    TD_G,
-    TD_H,
-    TD_I,
-    TD_M,
-    TD_N,
-    TD_P,
-    TD_R,
-    TD_T,
-    TD_U,
-    TD_V,
-    TD_X,
-    TD_Y,
-    TD_Z,
-    TD_COMMA,
-    TD_SLASH
+/*
+ * Return an integer that corresponds to what kind of tap dance should be executed.
+ *
+ * How to figure out tap dance state: interrupted and pressed.
+ *
+ * Interrupted: If the state of a dance dance is "interrupted", that means that another key has been hit
+ *  under the tapping term. This is typically indicitive that you are trying to "tap" the key.
+ *
+ * Pressed: Whether or not the key is still being pressed. If this value is true, that means the tapping term
+ *  has ended, but the key is still being pressed down. This generally means the key is being "held".
+ *
+ * One thing that is currenlty not possible with qmk software in regards to tap dance is to mimic the "permissive hold"
+ *  feature. In general, advanced tap dances do not work well if they are used with commonly typed letters.
+ *  For example "A". Tap dances are best used on non-letter keys that are not hit while typing letters.
+ *
+ * Good places to put an advanced tap dance:
+ *  z,q,x,j,k,v,b, any function key, home/end, comma, semi-colon
+ *
+ * Criteria for "good placement" of a tap dance key:
+ *  Not a key that is hit frequently in a sentence
+ *  Not a key that is used frequently to double tap, for example 'tab' is often double tapped in a terminal, or
+ *    in a web form. So 'tab' would be a poor choice for a tap dance.
+ *  Letters used in common words as a double. For example 'p' in 'pepper'. If a tap dance function existed on the
+ *    letter 'p', the word 'pepper' would be quite frustating to type.
+ *
+ * For the third point, there does exist the 'DOUBLE_SINGLE_TAP', however this is not fully tested
+ *
+ */
+int cur_dance (tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) {
+            return SINGLE_TAP;
+        } else {
+            // key has not been interrupted, but they key is still held. Means you want to send a 'HOLD'.
+            return SINGLE_HOLD;
+        }
+    }
+    else if (state->count == 2) {
+        /*
+        * DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
+        * action when hitting 'pp'. Suggested use case for this return value is when you want to send two
+        * keystrokes of the key, and not the 'double tap' action/macro.
+        */
+        if (state->interrupted) {
+            return DOUBLE_SINGLE_TAP;
+        } else if (state->pressed) {
+            return DOUBLE_HOLD;
+        } else {
+            return DOUBLE_TAP;
+        }
+    }
+    // Assumes no one is trying to type the same letter three times (at least not quickly).
+    // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
+    // an exception here to return a 'TRIPLE_SINGLE_TAP', and define that enum just like 'DOUBLE_SINGLE_TAP'
+    else if (state->count == 3) {
+        if (state->interrupted) {
+            return TRIPLE_SINGLE_TAP;
+        } else if (state->pressed) {
+            return TRIPLE_HOLD;
+        } else {
+            return TRIPLE_TAP;
+        }
+    }
+    else if (state->count > 3) {
+        return MORE_TAP;
+    }
+    else return 99; //magic number. At some point this method will expand to work for more presses
 };
 
+// utility function to repeat a key x times
+void repeat_key_x_time(uint16_t keycode, int x) {
+    for (int i = 0; i < x; i++) {
+        register_code(keycode);
+    }
+
+    // less than register_code because unregister_code in hoge_reset
+    for (int i = 1; i < x; i++) {
+        unregister_code(keycode);
+    }
+}
+
+// utility function to double shift
+void double_shift(tap_dance_state_t *state, void *user_data) {
+    register_code(KC_LSFT);
+    unregister_code(KC_LSFT);
+    register_code(KC_LSFT);
+    unregister_code(KC_LSFT);
+}
+
+// structs for tap dance keys
 typedef struct {
     bool is_press_action;
     int state;
 } tap;
 
-//instanalize an instance of 'tap' for the 'x' tap dance.
 static tap btap_state = {
     .is_press_action = true,
     .state = NONE
@@ -135,86 +202,7 @@ static tap slash_tap_state = {
     .state = NONE
 };
 
-/*
- * Return an integer that corresponds to what kind of tap dance should be executed.
- *
- * How to figure out tap dance state: interrupted and pressed.
- *
- * Interrupted: If the state of a dance dance is "interrupted", that means that another key has been hit
- *  under the tapping term. This is typically indicitive that you are trying to "tap" the key.
- *
- * Pressed: Whether or not the key is still being pressed. If this value is true, that means the tapping term
- *  has ended, but the key is still being pressed down. This generally means the key is being "held".
- *
- * One thing that is currenlty not possible with qmk software in regards to tap dance is to mimic the "permissive hold"
- *  feature. In general, advanced tap dances do not work well if they are used with commonly typed letters.
- *  For example "A". Tap dances are best used on non-letter keys that are not hit while typing letters.
- *
- * Good places to put an advanced tap dance:
- *  z,q,x,j,k,v,b, any function key, home/end, comma, semi-colon
- *
- * Criteria for "good placement" of a tap dance key:
- *  Not a key that is hit frequently in a sentence
- *  Not a key that is used frequently to double tap, for example 'tab' is often double tapped in a terminal, or
- *    in a web form. So 'tab' would be a poor choice for a tap dance.
- *  Letters used in common words as a double. For example 'p' in 'pepper'. If a tap dance function existed on the
- *    letter 'p', the word 'pepper' would be quite frustating to type.
- *
- * For the third point, there does exist the 'DOUBLE_SINGLE_TAP', however this is not fully tested
- *
- */
-int cur_dance (tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) {
-            return SINGLE_TAP;
-        } else {
-            // key has not been interrupted, but they key is still held. Means you want to send a 'HOLD'.
-            return SINGLE_HOLD;
-        }
-    }
-    else if (state->count == 2) {
-        /*
-        * DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
-        * action when hitting 'pp'. Suggested use case for this return value is when you want to send two
-        * keystrokes of the key, and not the 'double tap' action/macro.
-        */
-        if (state->interrupted) {
-            return DOUBLE_SINGLE_TAP;
-        } else if (state->pressed) {
-            return DOUBLE_HOLD;
-        } else {
-            return DOUBLE_TAP;
-        }
-    }
-    // Assumes no one is trying to type the same letter three times (at least not quickly).
-    // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
-    // an exception here to return a 'TRIPLE_SINGLE_TAP', and define that enum just like 'DOUBLE_SINGLE_TAP'
-    else if (state->count == 3) {
-        if (state->interrupted) {
-            return TRIPLE_SINGLE_TAP;
-        } else if (state->pressed) {
-            return TRIPLE_HOLD;
-        } else {
-            return TRIPLE_TAP;
-        }
-    }
-    else if (state->count > 3) {
-        return MORE_TAP;
-    }
-    else return 99; //magic number. At some point this method will expand to work for more presses
-};
-
-void repeat_key_x_time(uint16_t keycode, int x) {
-    for (int i = 0; i < x; i++) {
-        register_code(keycode);
-    }
-
-    // less than register_code because unregister_code in hoge_reset
-    for (int i = 1; i < x; i++) {
-        unregister_code(keycode);
-    }
-}
-
+// functions for tap dance keys
 void b_finished (tap_dance_state_t *state, void *user_data) {
     btap_state.state = cur_dance(state);
     switch (btap_state.state) {
@@ -1484,12 +1472,28 @@ void slash_reset (tap_dance_state_t *state, void *user_data) {
     slash_tap_state.state = NONE;
 };
 
-void double_shift(tap_dance_state_t *state, void *user_data) {
-    register_code(KC_LSFT);
-    unregister_code(KC_LSFT);
-    register_code(KC_LSFT);
-    unregister_code(KC_LSFT);
-}
+// keycode definitions for tap dance actions
+enum {
+    TD_DOUBLE_SHIFT = 0,
+    TD_B,
+    TD_C,
+    TD_E,
+    TD_G,
+    TD_H,
+    TD_I,
+    TD_M,
+    TD_N,
+    TD_P,
+    TD_R,
+    TD_T,
+    TD_U,
+    TD_V,
+    TD_X,
+    TD_Y,
+    TD_Z,
+    TD_COMMA,
+    TD_SLASH
+};
 
 tap_dance_action_t tap_dance_actions[] = {
     [TD_DOUBLE_SHIFT] = ACTION_TAP_DANCE_FN(double_shift),
