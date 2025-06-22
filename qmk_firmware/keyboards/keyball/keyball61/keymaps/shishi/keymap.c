@@ -332,7 +332,7 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
         case CKC_SPACE:
             SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_SPACE, layer_on(2), layer_off(2))
             break;
-        case CKC_SPACE:
+        case CKC_TAB:
             SMTD_TAP_HOLD_REPEAT_CUSTOM(KC_TAB, layer_on(1), layer_off(1))
             break;
         default:
