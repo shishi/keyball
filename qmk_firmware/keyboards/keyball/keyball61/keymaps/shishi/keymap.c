@@ -100,19 +100,19 @@ static bool key_was_tapped = false;
         case SMTD_ACTION_TOUCH: \
             break; \
         case SMTD_ACTION_TAP: \
-            tap_code(tap_key); \
+            tap_code16(tap_key); \
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
             if (key_was_tapped) { \
-                register_code(tap_key); \
+                register_code16(tap_key); \
             } else { \
-                register_code(hold_key); \
+                register_code16(hold_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
-            unregister_code(tap_key); \
-            unregister_code(hold_key); \
+            unregister_code16(tap_key); \
+            unregister_code16(hold_key); \
             key_was_tapped = false; \
             break; \
     }
@@ -128,21 +128,21 @@ static bool key_was_tapped = false;
         case SMTD_ACTION_TOUCH: \
             break; \
         case SMTD_ACTION_TAP: \
-            tap_code(tap_key); \
+            tap_code16(tap_key); \
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
             if (key_was_tapped) { \
-                register_code(tap_key); \
+                register_code16(tap_key); \
             } else { \
                 register_mods(MOD_BIT(hold_mod)); \
-                register_code(hold_key); \
+                register_code16(hold_key); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
-            unregister_code(tap_key); \
+            unregister_code16(tap_key); \
             unregister_mods(MOD_BIT(hold_mod)); \
-            unregister_code(hold_key); \
+            unregister_code16(hold_key); \
             key_was_tapped = false; \
             break; \
     }
@@ -158,18 +158,18 @@ static bool key_was_tapped = false;
         case SMTD_ACTION_TOUCH: \
             break; \
         case SMTD_ACTION_TAP: \
-            tap_code(tap_key); \
+            tap_code16(tap_key); \
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
             if (key_was_tapped) { \
-                register_code(tap_key); \
+                register_code16(tap_key); \
             } else { \
                 hold_action; \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
-            unregister_code(tap_key); \
+            unregister_code16(tap_key); \
             release_action; \
             key_was_tapped = false; \
             break; \
@@ -186,18 +186,18 @@ static bool key_was_tapped = false;
         case SMTD_ACTION_TOUCH: \
             break; \
         case SMTD_ACTION_TAP: \
-            tap_code(tap_key); \
+            tap_code16(tap_key); \
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
             if (key_was_tapped) { \
-                register_code(tap_key); \
+                register_code16(tap_key); \
             } else { \
                 send_string(hold_string); \
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
-            unregister_code(tap_key); \
+            unregister_code16(tap_key); \
             key_was_tapped = false; \
             break; \
     }
@@ -215,12 +215,12 @@ static bool key_was_tapped = false;
         case SMTD_ACTION_TOUCH: \
             break; \
         case SMTD_ACTION_TAP: \
-            tap_code(tap_key); \
+            tap_code16(tap_key); \
             key_was_tapped = true; \
             break; \
         case SMTD_ACTION_HOLD: \
             if (key_was_tapped) { \
-                register_code(tap_key); \
+                register_code16(tap_key); \
             } else { \
                 uint16_t keys[] = {__VA_ARGS__, KC_NO}; \
                 for (int i = 0; keys[i] != KC_NO; i++) { \
@@ -229,7 +229,7 @@ static bool key_was_tapped = false;
             } \
             break; \
         case SMTD_ACTION_RELEASE: \
-            unregister_code(tap_key); \
+            unregister_code16(tap_key); \
             key_was_tapped = false; \
             break; \
     }
