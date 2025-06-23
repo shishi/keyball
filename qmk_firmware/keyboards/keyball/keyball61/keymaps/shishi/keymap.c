@@ -1544,25 +1544,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX  , TO(3)        , TO(2)        , TO(1)        , LT(3,KC_ESC) , LT(2,KC_SPC) , LT(1,KC_TAB) ,          LT(1,KC_ENTER) , LT(2,KC_BSPC) , XXXXXXX      , XXXXXXX      , XXXXXXX        , XXXXXXX         , XXXXXXX
   ),
   [1] = LAYOUT_universal(
-    XXXXXXX , XXXXXXX  , KC_PEQL , KC_PSLS , KC_PAST , KC_NUM  ,                                            XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                                            XXXXXXX , KC_HOME  , KC_END  , KC_PGUP , KC_GRV  , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                                            KC_LEFT , KC_DOWN  , KC_UP   , KC_RGHT , KC_QUOT , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , KC_P1   , KC_P2   , KC_P3   , KC_PENT , TO(0)   ,            TO(0)               , XXXXXXX , KC_MINUS , KC_EQL  , KC_PGDN , KC_BSLS , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , KC_0    , KC_PDOT , KC_PCMM , XXXXXXX , XXXXXXX ,            TD(TD_DOUBLE_SHIFT) , KC_DEL  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
+    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                                            XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_PEQL  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                                            XXXXXXX , KC_HOME  , KC_END  , KC_PGUP , KC_GRV  , XXXXXXX ,
+    XXXXXXX , KC_PSLS  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                                            KC_LEFT , KC_DOWN  , KC_UP   , KC_RGHT , KC_QUOT , XXXXXXX ,
+    XXXXXXX , KC_PAST  , KC_P1   , KC_P2   , KC_P3   , KC_PENT , XXXXXXX ,              XXXXXXX , XXXXXXX , KC_MINUS , KC_EQL  , KC_PGDN , KC_BSLS , XXXXXXX ,
+    XXXXXXX , XXXXXXX  , KC_NUM  , KC_PDOT , KC_PCMM , KC_0    , TO(0)   ,              TO(0)   , KC_DEL  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
   ),
   [2] = LAYOUT_universal(
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                                  XXXXXXX    , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , XXXXXXX ,                                  A(KC_F4)   , A(KC_LEFT) , A(KC_RIGHT) , XXXXXXX , KC_GRV  , XXXXXXX ,
-    XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , XXXXXXX ,                                  C(KC_W)    , KC_BTN1    , KC_BTN3     , KC_BTN2 , KC_QUOT , XXXXXXX ,
-    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , XXXXXXX , TO(0)   ,             TO(0)    , C(S(KC_T)) , KC_PGUP    , KC_PGDN     , XXXXXXX , KC_BSLS , XXXXXXX ,
-    XXXXXXX , KC_F13  , KC_F14  , KC_F15  , XXXXXXX , XXXXXXX , XXXXXXX ,             XXXXXXX  , XXXXXXX    , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,                                   XXXXXXX              , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_INS   ,                                   A(KC_F4)             , A(KC_LEFT) , A(KC_RIGHT) , XXXXXXX , KC_GRV  , XXXXXXX ,
+    XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , KC_SCRL  ,                                   C(KC_W)              , KC_BTN1    , KC_BTN3     , KC_BTN2 , KC_QUOT , XXXXXXX ,
+    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , KC_PAUSE , XXXXXXX  ,             XXXXXXX ,  C(S(KC_T))           , KC_PGUP    , KC_PGDN     , XXXXXXX , KC_BSLS , XXXXXXX ,
+    XXXXXXX , KC_F13  , KC_F14  , KC_F15  , XXXXXXX , XXXXXXX  , TO(0)    ,             TO(0)   ,  TD(TD_DOUBLE_SHIFT)  , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX
   ),
   [3] = LAYOUT_universal(
-    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , XXXXXXX ,                              XXXXXXX  , XXXXXXX    , XXXXXXX    , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KBC_RST  , XXXXXXX , SSNP_HOR , SSNP_VRT , XXXXXXX ,                              KC_INS   , KC_LBRC    , KC_RBRC    , KC_APP  , KC_GRV  , XXXXXXX ,
-    XXXXXXX , KBC_SAVE , XXXXXXX , CPI_D100 , CPI_I100 , QK_BOOT ,                              KC_SCRL  , S(KC_9)    , S(KC_0)    , KC_PSCR , KC_QUOT , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , XXXXXXX , SCRL_DVD , SCRL_DVI , EE_CLR  , TO(0)   ,          TO(0)   , KC_PAUSE , S(KC_LBRC) , S(KC_RBRC) , XXXXXXX , KC_BSLS , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , XXXXXXX , AML_TO   , XXXXXXX  , KC_SPC  , XXXXXXX ,          XXXXXXX , XXXXXXX  , XXXXXXX    , XXXXXXX    , XXXXXXX , XXXXXXX , XXXXXXX
+    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , XXXXXXX ,                              XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KBC_RST  , XXXXXXX , SSNP_HOR , SSNP_VRT , AML_TO  ,                              KC_APP   , KC_1     , KC_2     , KC_3    , KC_4    , XXXXXXX ,
+    XXXXXXX , KBC_SAVE , XXXXXXX , CPI_D100 , CPI_I100 , QK_BOOT ,                              KC_PSCR  , KC_5     , KC_6     , KC_7    , KC_8    , XXXXXXX ,
+    XXXXXXX , XXXXXXX  , XXXXXXX , SCRL_DVD , SCRL_DVI , EE_CLR  , XXXXXXX ,          XXXXXXX , XXXXXXX  , KC_9     , KC_0     , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , KC_SPC  , TO(0)   ,          TO(0)   , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX
   ),
 };
 // clang-format on
