@@ -1529,8 +1529,8 @@ const uint16_t PROGMEM kc_o_td_p_combo[] = {KC_O, TD(TD_P), COMBO_END};
 const uint16_t PROGMEM td_i_kc_o_combo[] = {TD(TD_I), KC_O, COMBO_END};
 
 combo_t key_combos[] = {
-    [KC_O_TD_P_COMBO] = COMBO(kc_o_td_p_combo, TO(2)),
-    [TD_I_KC_O_COMBO] = COMBO(td_i_kc_o_combo, TO(3)),
+    [KC_O_TD_P_COMBO] = COMBO(kc_o_td_p_combo, MO(2)),
+    [TD_I_KC_O_COMBO] = COMBO(td_i_kc_o_combo, MO(3)),
 };
 // end combo
 

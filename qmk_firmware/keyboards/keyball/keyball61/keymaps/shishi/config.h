@@ -13,7 +13,7 @@
 // #define HOLD_ON_OTHER_KEY_PRESS
 
 // combo
-#define COMBO_TERM 50
+#define COMBO_TERM 60
 #define COMBO_HOLD_TERM 150
 
 // // sm_td https://github.com/stasmarkin/sm_td/blob/main/docs/010_installation_guide.md
