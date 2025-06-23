@@ -1517,13 +1517,30 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, slash_finished, slash_reset)
 };
 
+// begin combo
+enum combo_events {
+    KC_O_TD_P_COMBO,
+    TD_I_KC_O_COMBO,
+    COMBO_LENGTH
+};
+uint16_t COMBO_LEN = COMBO_LENGTH;
+
+const uint16_t PROGMEM kc_o_td_p_combo[] = {KC_O, TD(TD_P), COMBO_END};
+const uint16_t PROGMEM td_i_kc_o_combo[] = {TD(TD_I), KC_O, COMBO_END};
+
+combo_t key_combos[] = {
+    [KC_O_TD_P_COMBO] = COMBO(kc_o_td_p_combo, TO(2)),
+    [TD_I_KC_O_COMBO] = COMBO(td_i_kc_o_combo, TO(3)),
+};
+// end combo
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     XXXXXXX  , KC_1         , KC_2         , KC_3         , KC_4         , KC_5         ,                                          KC_6          , KC_7         , KC_8         , KC_9           , KC_0            , XXXXXXX ,
-    XXXXXXX  , KC_Q         , KC_W         , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                          TD(TD_Y)      , TD(TD_U)     , TD(TD_I)     , LT(3, KC_O)    , TD(TD_P)        , XXXXXXX ,
+    XXXXXXX  , KC_Q         , KC_W         , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                          TD(TD_Y)      , TD(TD_U)     , TD(TD_I)     , KC_O           , TD(TD_P)        , XXXXXXX ,
     XXXXXXX  , LGUI_T(KC_A) , LALT_T(KC_S) , LSFT_T(KC_D) , LCTL_T(KC_F) , TD(TD_G)     ,                                          TD(TD_H)      , RCTL_T(KC_J) , RSFT_T(KC_K) , RALT_T(KC_L)   , RGUI_T(KC_SCLN) , XXXXXXX ,
-    XXXXXXX  , TD(TD_Z)     , TD(TD_X)     , TD(TD_C)     , TD(TD_V)     , TD(TD_B)     , KC_LNG1      ,          KC_LNG2        , TD(TD_N)      , TD(TD_M)     , TD(TD_COMMA) , LT(2, KC_DOT)  , TD(TD_SLASH)    , XXXXXXX ,
+    XXXXXXX  , TD(TD_Z)     , TD(TD_X)     , TD(TD_C)     , TD(TD_V)     , TD(TD_B)     , KC_LNG1      ,          KC_LNG2        , TD(TD_N)      , TD(TD_M)     , TD(TD_COMMA) , KC_DOT         , TD(TD_SLASH)    , XXXXXXX ,
     XXXXXXX  , TO(3)        , TO(2)        , TO(1)        , LT(3,KC_ESC) , LT(2,KC_SPC) , LT(1,KC_TAB) ,          LT(1,KC_ENTER) , LT(2,KC_BSPC) , XXXXXXX      , XXXXXXX      , XXXXXXX        , XXXXXXX         , XXXXXXX
   ),
   [1] = LAYOUT_universal(
