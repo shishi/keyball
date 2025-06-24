@@ -21,6 +21,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+// begin tap dance
 enum {
     NONE = 0,
     SINGLE_TAP = 1,
@@ -1516,6 +1517,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_COMMA] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, comma_finished, comma_reset),
     [TD_SLASH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, slash_finished, slash_reset)
 };
+// end tap dance
 
 // begin combo
 enum combo_events {
@@ -1529,8 +1531,8 @@ const uint16_t PROGMEM kc_o_td_p_combo[] = {KC_O, TD(TD_P), COMBO_END};
 const uint16_t PROGMEM td_i_kc_o_combo[] = {TD(TD_I), KC_O, COMBO_END};
 
 combo_t key_combos[] = {
-    [KC_O_TD_P_COMBO] = COMBO(kc_o_td_p_combo, MO(2)),
-    [TD_I_KC_O_COMBO] = COMBO(td_i_kc_o_combo, MO(3)),
+    [KC_O_TD_P_COMBO] = COMBO(kc_o_td_p_combo, MO(3)),
+    [TD_I_KC_O_COMBO] = COMBO(td_i_kc_o_combo, MO(2)),
 };
 // end combo
 
@@ -1551,18 +1553,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX , XXXXXXX  , KC_NUM  , KC_PDOT , KC_PCMM , KC_0    , TO(0)   ,              TO(0)   , KC_DEL  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
   ),
   [2] = LAYOUT_universal(
-    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,                                   XXXXXXX              , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_INS   ,                                   A(KC_F4)             , A(KC_LEFT) , A(KC_RIGHT) , XXXXXXX , KC_GRV  , XXXXXXX ,
-    XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , KC_SCRL  ,                                   C(KC_W)              , KC_BTN1    , KC_BTN3     , KC_BTN2 , KC_QUOT , XXXXXXX ,
-    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , KC_PAUSE , XXXXXXX  ,             XXXXXXX ,  C(S(KC_T))           , KC_PGUP    , KC_PGDN     , XXXXXXX , KC_BSLS , XXXXXXX ,
-    XXXXXXX , KC_F13  , KC_F14  , KC_F15  , XXXXXXX , XXXXXXX  , TO(0)    ,             TO(0)   ,  TD(TD_DOUBLE_SHIFT)  , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX
+    XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,                                 XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_INS   ,                                 KC_APP   , KC_1     , KC_2     , KC_3    , KC_4    , XXXXXXX ,
+    XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , KC_SCRL  ,                                 KC_PSCR  , KC_5     , KC_6     , KC_7    , KC_8    , XXXXXXX ,
+    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , KC_PAUSE , XXXXXXX  ,            XXXXXXX , XXXXXXX  , KC_9     , KC_0     , XXXXXXX , XXXXXXX , XXXXXXX ,
+    XXXXXXX , KC_F13  , KC_F14  , KC_F15  , XXXXXXX , XXXXXXX  , TO(0)    ,            TO(0)   , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX
   ),
   [3] = LAYOUT_universal(
-    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , XXXXXXX ,                              XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KBC_RST  , XXXXXXX , SSNP_HOR , SSNP_VRT , AML_TO  ,                              KC_APP   , KC_1     , KC_2     , KC_3    , KC_4    , XXXXXXX ,
-    XXXXXXX , KBC_SAVE , XXXXXXX , CPI_D100 , CPI_I100 , QK_BOOT ,                              KC_PSCR  , KC_5     , KC_6     , KC_7    , KC_8    , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , XXXXXXX , SCRL_DVD , SCRL_DVI , EE_CLR  , XXXXXXX ,          XXXXXXX , XXXXXXX  , KC_9     , KC_0     , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , KC_SPC  , TO(0)   ,          TO(0)   , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX
+    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , XXXXXXX ,                                XXXXXXX              , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX  ,
+    XXXXXXX , KBC_RST  , XXXXXXX , SSNP_HOR , SSNP_VRT , AML_TO  ,                                A(KC_F4)             , A(KC_LEFT) , A(KC_RIGHT) , XXXXXXX , KC_GRV  , XXXXXXX  ,
+    XXXXXXX , KBC_SAVE , XXXXXXX , CPI_D100 , CPI_I100 , QK_BOOT ,                                C(KC_W)              , KC_BTN1    , KC_BTN3     , KC_BTN2 , KC_QUOT , XXXXXXX  ,
+    XXXXXXX , XXXXXXX  , XXXXXXX , SCRL_DVD , SCRL_DVI , EE_CLR  , XXXXXXX ,           XXXXXXX ,  C(S(KC_T))           , KC_PGUP    , KC_PGDN     , XXXXXXX , KC_BSLS , XXXXXXX  ,
+    XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX  , KC_SPC  , TO(0)   ,           TO(0)   ,  TD(TD_DOUBLE_SHIFT)  , XXXXXXX    , XXXXXXX     , XXXXXXX , XXXXXXX , XXXXXXX
   ),
 };
 // clang-format on
