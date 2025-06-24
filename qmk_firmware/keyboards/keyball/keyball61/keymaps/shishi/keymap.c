@@ -4,7 +4,7 @@
 
 #ifdef OLED_ENABLE
 
-#    include "lib/oledkit/oledkit.h"
+#include "lib/oledkit/oledkit.h"
 void oledkit_render_info_user(void) {
     keyball_oled_render_keyinfo();
     keyball_oled_render_ballinfo();
@@ -16,8 +16,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // if just include layer2, set scroll mode
     // keyball_set_scroll_mode(layer_state_is(2));
 
-    // Auto enable scroll mode when the highest layer is 3
-    keyball_set_scroll_mode(get_highest_layer(state) == 3);
+    // Auto enable scroll mode when the highest layer is 2
+    keyball_set_scroll_mode(get_highest_layer(state) == 2);
     return state;
 }
 
@@ -1554,9 +1554,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [2] = LAYOUT_universal(
     XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  ,                                 XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_INS   ,                                 XXXXXXX , KC_HOME  , KC_END  , KC_PGUP , KC_GRV  , XXXXXXX ,
+    XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_INS   ,                                 KC_PGUP , KC_HOME  , KC_END  , KC_PGUP , KC_GRV  , XXXXXXX ,
     XXXXXXX , KC_F5   , KC_F6   , KC_F7   , KC_F8   , KC_SCRL  ,                                 KC_LEFT , KC_DOWN  , KC_UP   , KC_RGHT , KC_QUOT , XXXXXXX ,
-    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , KC_PAUSE , XXXXXXX  ,            XXXXXXX , XXXXXXX , KC_MINUS , KC_EQL  , KC_PGDN , KC_BSLS , XXXXXXX ,
+    XXXXXXX , KC_F9   , KC_F10  , KC_F11  , KC_F12  , KC_PAUSE , XXXXXXX  ,            XXXXXXX , KC_PGDN , KC_MINUS , KC_EQL  , KC_PGDN , KC_BSLS , XXXXXXX ,
     XXXXXXX , KC_F13  , KC_F14  , KC_F15  , XXXXXXX , XXXXXXX  , TO(0)    ,            TO(0)   , KC_DEL  , XXXXXXX  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
   ),
   [3] = LAYOUT_universal(
