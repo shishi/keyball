@@ -788,7 +788,7 @@ void n_reset (tap_dance_state_t *state, void *user_data) {
 
 void o_finished (tap_dance_state_t *state, void *user_data) {
     otap_state.state = cur_dance(state);
-    switch (ptap_state.state) {
+    switch (otap_state.state) {
         case SINGLE_TAP:
             register_code(KC_O);
             break;
