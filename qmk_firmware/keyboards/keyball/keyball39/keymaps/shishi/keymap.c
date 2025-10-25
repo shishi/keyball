@@ -1608,8 +1608,8 @@ enum combo_events {
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM kc_o_td_p_combo[] = {KC_O, TD(TD_P), COMBO_END};
-const uint16_t PROGMEM td_i_kc_o_combo[] = {TD(TD_I), KC_O, COMBO_END};
+const uint16_t PROGMEM kc_o_td_p_combo[] = {TD(TD_O), TD(TD_P), COMBO_END};
+const uint16_t PROGMEM td_i_kc_o_combo[] = {TD(TD_I), TD(TD_O), COMBO_END};
 
 combo_t key_combos[] = {
     [KC_O_TD_P_COMBO] = COMBO(kc_o_td_p_combo, MO(3)),
