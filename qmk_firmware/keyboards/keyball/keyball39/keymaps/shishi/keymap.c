@@ -1621,7 +1621,7 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (shishi)
   [0] = LAYOUT_universal(
-    KC_Q         , KC_W         , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                       TD(TD_Y)      , TD(TD_U)     , TD(TD_I)     , TD(TD_O)       , TD(TD_P)        ,
+    KC_Q         , LT(3, KC_W)  , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                       TD(TD_Y)      , TD(TD_U)     , TD(TD_I)     , TD(TD_O)       , TD(TD_P)        ,
     LGUI_T(KC_A) , LALT_T(KC_S) , LSFT_T(KC_D) , LCTL_T(KC_F) , TD(TD_G)     ,                                       TD(TD_H)      , RCTL_T(KC_J) , RSFT_T(KC_K) , RALT_T(KC_L)   , RGUI_T(KC_SCLN) ,
     TD(TD_Z)     , TD(TD_X)     , TD(TD_C)     , TD(TD_V)     , TD(TD_B)     ,                                       TD(TD_N)      , TD(TD_M)     , TD(TD_COMMA) , KC_DOT         , TD(TD_SLASH)    ,
     KC_LNG1      , KC_LNG1      , KC_LNG2      , LT(3,KC_ESC) , LT(2,KC_SPC) , LT(1,KC_TAB) ,       LT(1,KC_ENTER) , LT(2,KC_BSPC) , XXXXXXX      , XXXXXXX      , XXXXXXX        , KC_LNG2
