@@ -177,6 +177,10 @@ static tap ptap_state = {
     .is_press_action = true,
     .state = NONE
 };
+static tap qtap_state = {
+    .is_press_action = true,
+    .state = NONE
+};
 static tap rtap_state = {
     .is_press_action = true,
     .state = NONE
@@ -854,6 +858,7 @@ void o_reset (tap_dance_state_t *state, void *user_data) {
     }
     otap_state.state = NONE;
 };
+
 void p_finished (tap_dance_state_t *state, void *user_data) {
     ptap_state.state = cur_dance(state);
     switch (ptap_state.state) {
@@ -921,6 +926,75 @@ void p_reset (tap_dance_state_t *state, void *user_data) {
             break;
     }
     ptap_state.state = NONE;
+};
+
+void q_finished (tap_dance_state_t *state, void *user_data) {
+    qtap_state.state = cur_dance(state);
+    switch (qtap_state.state) {
+        case SINGLE_TAP:
+            register_code(KC_Q);
+            break;
+        case SINGLE_HOLD:
+            register_code(KC_F13);
+            break;
+        case DOUBLE_TAP:
+            repeat_key_x_time(KC_Q, 2);
+            break;
+        case DOUBLE_HOLD:
+            register_code(KC_Q);
+            break;
+        case DOUBLE_SINGLE_TAP:
+            repeat_key_x_time(KC_Q, 2);
+            break;
+        case TRIPLE_TAP:
+            repeat_key_x_time(KC_Q, 3);
+            break;
+        case TRIPLE_HOLD:
+            register_code(KC_Q);
+            break;
+        case TRIPLE_SINGLE_TAP:
+            repeat_key_x_time(KC_Q, 3);
+            break;
+        case MORE_TAP:
+            repeat_key_x_time(KC_Q, state->count);
+            break;
+        default:
+            break;
+    }
+};
+void q_reset (tap_dance_state_t *state, void *user_data) {
+    switch (qtap_state.state) {
+        case SINGLE_TAP:
+            unregister_code(KC_Q);
+            break;
+        case SINGLE_HOLD:
+            unregister_code(KC_F13);
+            break;
+        case DOUBLE_TAP:
+            unregister_code(KC_Q);
+            break;
+        case DOUBLE_HOLD:
+            unregister_code(KC_Q);
+            break;
+        case DOUBLE_SINGLE_TAP:
+            unregister_code(KC_Q);
+            break;
+        case TRIPLE_TAP:
+            unregister_code(KC_Q);
+            break;
+        case TRIPLE_HOLD:
+            unregister_code(KC_Q);
+            break;
+        case TRIPLE_SINGLE_TAP:
+            unregister_code(KC_Q);
+            break;
+        case MORE_TAP:
+            unregister_code(KC_Q);
+            break;
+        default:
+            break;
+    }
+    qtap_state.state = NONE;
 };
 
 void r_finished (tap_dance_state_t *state, void *user_data) {
@@ -1565,6 +1639,7 @@ enum {
     TD_N,
     TD_O,
     TD_P,
+    TD_Q,
     TD_R,
     TD_T,
     TD_U,
@@ -1588,6 +1663,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_N] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, n_finished, n_reset),
     [TD_O] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, o_finished, o_reset),
     [TD_P] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, p_finished, p_reset),
+    [TD_Q] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, q_finished, q_reset),
     [TD_R] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, r_finished, r_reset),
     [TD_T] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, t_finished, t_reset),
     [TD_U] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, u_finished, u_reset),
@@ -1621,10 +1697,10 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (shishi)
   [0] = LAYOUT_universal(
-    KC_Q         , LT(3, KC_W)  , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                       TD(TD_Y)      , TD(TD_U)     , TD(TD_I)     , TD(TD_O)       , TD(TD_P)        ,
+    TD(TD_Q)     , LT(3, KC_W)  , TD(TD_E)     , TD(TD_R)     , TD(TD_T)     ,                                       TD(TD_Y)      , TD(TD_U)     , TD(TD_I)     , TD(TD_O)       , TD(TD_P)        ,
     LGUI_T(KC_A) , LALT_T(KC_S) , LSFT_T(KC_D) , LCTL_T(KC_F) , TD(TD_G)     ,                                       TD(TD_H)      , RCTL_T(KC_J) , RSFT_T(KC_K) , RALT_T(KC_L)   , RGUI_T(KC_SCLN) ,
     TD(TD_Z)     , TD(TD_X)     , TD(TD_C)     , TD(TD_V)     , TD(TD_B)     ,                                       TD(TD_N)      , TD(TD_M)     , TD(TD_COMMA) , KC_DOT         , TD(TD_SLASH)    ,
-    KC_LNG1      , KC_LNG1      , KC_LNG2      , LT(3,KC_ESC) , LT(2,KC_SPC) , LT(1,KC_TAB) ,       LT(1,KC_ENTER) , LT(2,KC_BSPC) , XXXXXXX      , XXXXXXX      , XXXXXXX        , KC_LNG2
+    KC_F13       , KC_LNG1      , KC_LNG2      , LT(3,KC_ESC) , LT(2,KC_SPC) , LT(1,KC_TAB) ,       LT(1,KC_ENTER) , LT(2,KC_BSPC) , XXXXXXX      , XXXXXXX      , XXXXXXX        , KC_F13
   ),
 
   [1] = LAYOUT_universal(
