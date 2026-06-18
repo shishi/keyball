@@ -1731,7 +1731,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_A):
         case RGUI_T(KC_SCLN):
-            return 300;
+            return 400;
         default:
             return TAPPING_TERM;
     }
