@@ -1704,10 +1704,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_universal(
-    KC_PEQL  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                         KC_APP  , KC_1     , KC_2    , KC_3     , KC_4    ,
-    KC_PSLS  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                         KC_PSCR , KC_5     , KC_6    , KC_7     , KC_8    ,
-    KC_PAST  , KC_P1   , KC_P2   , KC_P3   , KC_PENT ,                         XXXXXXX , KC_9     , KC_0    , KC_MINUS , KC_EQL  ,
-    KC_NUM   , KC_PDOT , KC_PCMM , KC_0    , KC_0    , TO(0) ,       TO(0)   , XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX
+    KC_PEQL  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                         KC_1    , KC_2     , KC_3    , KC_4     , KC_5    ,
+    KC_PSLS  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                         KC_6    , KC_7     , KC_8    , KC_9     , KC_0    ,
+    KC_PAST  , KC_P1   , KC_P2   , KC_P3   , KC_PENT ,                         KC_APP  , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX ,
+    KC_NUM   , KC_PDOT , KC_PCMM , KC_0    , KC_0    , TO(0) ,       TO(0)   , KC_PSCR , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX
   ),
 
   [2] = LAYOUT_universal(
@@ -1731,7 +1731,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_A):
         case RGUI_T(KC_SCLN):
-            return 700;
+            return 750;
         default:
             return TAPPING_TERM;
     }
