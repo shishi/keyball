@@ -28,6 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // 5. void ?_reset()を追加する
 // 6. keymaps[][]にTD(TD_??)を追加する
 
+// キーボード経由の IME 操作から推定した IME 状態。
+// Win+Space などキーボード外で切り替えると実際とズレるが、
+// IME_* キーは LNG2 を先打ちするので記号自体は常に半角で出る。
+static bool ime_on = false;
+
 // begin tap dance
 enum {
     NONE = 0,
@@ -798,6 +803,7 @@ void o_finished (tap_dance_state_t *state, void *user_data) {
             break;
         case SINGLE_HOLD:
             register_code(KC_LNG2);
+            ime_on = false;
             break;
         case DOUBLE_TAP:
             repeat_key_x_time(KC_O, 2);
@@ -1693,6 +1699,14 @@ combo_t key_combos[] = {
 };
 // end combo
 
+// IME の状態によらず半角で入力したい記号用のカスタムキーコード
+enum custom_keycodes {
+    IME_MINS = SAFE_RANGE,
+    IME_EQL,
+    IME_COMM,
+    IME_DOT,
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (shishi)
@@ -1706,7 +1720,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [1] = LAYOUT_universal(
     KC_PEQL  , KC_P7   , KC_P8   , KC_P9   , KC_PMNS ,                         KC_1    , KC_2     , KC_3    , KC_4     , KC_5    ,
     KC_PSLS  , KC_P4   , KC_P5   , KC_P6   , KC_PPLS ,                         KC_6    , KC_7     , KC_8    , KC_9     , KC_0    ,
-    KC_PAST  , KC_P1   , KC_P2   , KC_P3   , KC_PENT ,                         KC_APP  , KC_MINUS , KC_EQL  , KC_COMMA , KC_DOT  ,
+    KC_PAST  , KC_P1   , KC_P2   , KC_P3   , KC_PENT ,                         KC_APP  , IME_MINS , IME_EQL , IME_COMM , IME_DOT ,
     KC_NUM   , KC_PDOT , KC_PCMM , KC_0    , KC_0    , TO(0) ,       TO(0)   , KC_PSCR , XXXXXXX  , XXXXXXX , XXXXXXX  , XXXXXXX
   ),
 
@@ -1735,6 +1749,90 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         default:
             return TAPPING_TERM;
     }
+}
+
+// IME_* キー: LNG2 (IME オフ) を先打ちして記号を半角で確定させ、
+// 推定状態がオンだったときだけ LNG1 で IME を復元する。
+// register/unregister を使い、通常キーと同じ押しっぱなしリピートを保つ。
+// 復元はキーリリース時、または別キーへのロールオーバー時 (次キーの
+// 送出前に flush) のどちらか早い方で行い、IME オフ状態が後続キーに
+// 漏れないようにする。
+// キーボードから host の IME 状態を読む手段は無い (HID は一方向) ため、
+// Win+Space 等キーボード外で切り替えると推定はズレる。その場合も
+// 記号出力は常に正しいが、IME は推定側 (stale な ime_on) に揃えられる:
+// 推定オフ/実際オン → オフに倒れる、推定オン/実際オフ → オンに倒れる。
+// どちらも 1 回で実状態と推定が再収束する。キーボード外での IME 切替を
+// 使わない運用を前提に受け入れた制約 — 意図した仕様
+static uint16_t ime_pending_symbol = KC_NO;
+
+static void flush_ime_symbol(bool restore) {
+    if (ime_pending_symbol == KC_NO) {
+        return;
+    }
+    unregister_code(ime_pending_symbol);
+    ime_pending_symbol = KC_NO;
+    if (restore && ime_on) {
+        tap_code(KC_LNG1);
+    }
+}
+
+static bool process_ime_symbol(uint16_t symbol, keyrecord_t *record) {
+    if (record->event.pressed) {
+        tap_code(KC_LNG2);
+        register_code(symbol);
+        ime_pending_symbol = symbol;
+    } else if (ime_pending_symbol == symbol) {
+        flush_ime_symbol(true);
+    }
+    return false;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed && ime_pending_symbol != KC_NO) {
+        // ロールオーバー: 次のキーが送出される前に記号を離して IME を戻す。
+        // 次も IME_* なら自分で LNG2 を打ち直すので復元は省く
+        bool next_is_ime_symbol = (keycode >= IME_MINS && keycode <= IME_DOT);
+        flush_ime_symbol(!next_is_ime_symbol);
+    }
+    switch (keycode) {
+        case KC_LNG1:
+            if (record->event.pressed) {
+                ime_on = true;
+            }
+            return true;
+        case KC_LNG2:
+            if (record->event.pressed) {
+                ime_on = false;
+            }
+            return true;
+        case RCTL_T(KC_J):
+            // SKK の C-j (かなモードへ) を検出する。tap.count で
+            // J のタップ側だけを見て、Ctrl 単独 (F 長押し) のときのみ。
+            // Ctrl+Shift+J 等のアプリショートカットは除外する。
+            // 素の Ctrl+J をショートカットに使うアプリでは誤検出が残るが、
+            // SKK の C-j と区別する手段は無い
+            if (record->event.pressed && record->tap.count > 0 && (get_mods() & MOD_MASK_CTRL) && (get_mods() & ~MOD_MASK_CTRL) == 0) {
+                ime_on = true;
+            }
+            return true;
+        case RALT_T(KC_L):
+            // SKK の l (英数モードへ) を検出する。かなモード中の裸の l は
+            // ほぼ確実にモード切替 (日本語ローマ字に l は現れない)。
+            // Shift+L (全角英数) や Ctrl+L は get_mods() で除外
+            if (record->event.pressed && record->tap.count > 0 && get_mods() == 0) {
+                ime_on = false;
+            }
+            return true;
+        case IME_MINS:
+            return process_ime_symbol(KC_MINUS, record);
+        case IME_EQL:
+            return process_ime_symbol(KC_EQL, record);
+        case IME_COMM:
+            return process_ime_symbol(KC_COMMA, record);
+        case IME_DOT:
+            return process_ime_symbol(KC_DOT, record);
+    }
+    return true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
