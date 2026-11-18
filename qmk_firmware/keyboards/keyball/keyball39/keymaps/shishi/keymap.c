@@ -944,7 +944,7 @@ void q_finished (tap_dance_state_t *state, void *user_data) {
             register_code(KC_F13);
             break;
         case DOUBLE_TAP:
-            repeat_key_x_time(KC_Q, 2);
+            register_code(KC_F14);
             break;
         case DOUBLE_HOLD:
             register_code(KC_Q);
@@ -977,7 +977,7 @@ void q_reset (tap_dance_state_t *state, void *user_data) {
             unregister_code(KC_F13);
             break;
         case DOUBLE_TAP:
-            unregister_code(KC_Q);
+            unregister_code(KC_F14);
             break;
         case DOUBLE_HOLD:
             unregister_code(KC_Q);
