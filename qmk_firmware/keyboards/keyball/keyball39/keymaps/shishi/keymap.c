@@ -1741,11 +1741,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 // 特定のキーだけ TAPPING_TERM を個別に設定する
+// config.h の TAPPING_TERM_PER_KEY が無いと QMK はこの関数を呼ばない
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LGUI_T(KC_A):
         case RGUI_T(KC_SCLN):
-            return 850;
+            return 200;
         default:
             return TAPPING_TERM;
     }
